@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Build Cavadas Academy APK
 
 on:
   workflow_dispatch:
@@ -22,22 +22,25 @@ jobs:
           distribution: temurin
           java-version: 21
 
-      - name: Install unzip
-        run: sudo apt-get update && sudo apt-get install -y unzip
-
-      - name: Extract Project
+      - name: Extract Project ZIP
         run: |
           rm -rf build_src
           mkdir build_src
-          unzip -o Cavadas_Academy_GitHub.zip -d build_src
-          echo "=== PROJECT CONTENT ==="
-          find build_src -type f | head -100
+          unzip -o Cavadas_Academy_Android_Project.zip -d build_src
+          echo "Conteúdo extraído:"
+          find build_src -maxdepth 4 -type f | head -100
 
-      - name: Find package.json
+      - name: Find Project Folder
         run: |
           PROJECT_DIR=$(find build_src -name package.json -exec dirname {} \; | head -1)
+
+          if [ -z "$PROJECT_DIR" ]; then
+            echo "ERRO: package.json não encontrado dentro do ZIP."
+            exit 1
+          fi
+
           echo "PROJECT_DIR=$PROJECT_DIR" >> $GITHUB_ENV
-          echo "Project found in: $PROJECT_DIR"
+          echo "Projeto encontrado em: $PROJECT_DIR"
 
       - name: Install Dependencies
         run: |
@@ -49,17 +52,19 @@ jobs:
           cd "$PROJECT_DIR"
           npm run build
 
-      - name: Install Capacitor
+      - name: Add Android Platform
         run: |
           cd "$PROJECT_DIR"
-          npm install @capacitor/core @capacitor/cli @capacitor/android
+          if [ ! -d "android" ]; then
+            npx cap add android
+          fi
 
-      - name: Sync Android
+      - name: Sync Capacitor Android
         run: |
           cd "$PROJECT_DIR"
           npx cap sync android
 
-      - name: Build APK
+      - name: Build Debug APK
         run: |
           cd "$PROJECT_DIR/android"
           chmod +x gradlew
@@ -68,6 +73,6 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: CavadasAcademy-APK
+          name: Cavadas-Academy-APK
           path: |
             build_src/**/android/app/build/outputs/apk/debug/*.apk
