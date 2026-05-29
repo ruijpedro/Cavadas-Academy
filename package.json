@@ -1,0 +1,6 @@
+{
+  "appId": "com.rjp.cavadasacademy",
+  "appName": "Cavadas Academy",
+  "webDir": "dist",
+  "server": { "androidScheme": "https" }
+}
