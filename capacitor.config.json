@@ -1,6 +1,6 @@
 {
-  "appId": "com.rjp.twoyouacademy",
-  "appName": "2YOU Academy",
+  "appId": "com.rjp.cavadasacademy",
+  "appName": "Cavadas Academy",
   "webDir": "dist",
   "bundledWebRuntime": false,
   "server": {
