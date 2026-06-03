@@ -26,7 +26,7 @@ jobs:
         run: npm install
 
       - name: Build Web App
-        run: npm run build
+        run: BUILD_TARGET=android npm run build
 
       - name: Install Capacitor
         run: npm install @capacitor/core @capacitor/cli @capacitor/android
