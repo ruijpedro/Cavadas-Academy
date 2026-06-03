@@ -1,0 +1,9 @@
+{
+  "appId": "com.rjp.twoyouacademy",
+  "appName": "2YOU Academy",
+  "webDir": "dist",
+  "bundledWebRuntime": false,
+  "server": {
+    "androidScheme": "https"
+  }
+}
