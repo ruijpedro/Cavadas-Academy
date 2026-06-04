@@ -1,3 +1,5 @@
-# Cavadas Academy
+# 2YOU Academy
 
-Base v2 estabilizada para WebApp + Android.
+WebApp + Android com Drive, Sheets e PDF.
+
+Editar `src/services/google.js` com CLIENT_ID e API_KEY.
